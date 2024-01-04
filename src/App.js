@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
+import Lifecycle from "./Lifecycle";
 
 // const DummyList = [
 //   {
@@ -29,7 +30,7 @@ import DiaryList from "./DiaryList";
 //   },
 // ];
 
-function App() {
+const App = () => {
   const [data, setData] = useState([]);
 
   const dataId = useRef(0);
@@ -48,9 +49,7 @@ function App() {
   };
 
   const onRemove = (targetId) => {
-    console.log(`${targetId}가 삭제되었습니다`);
     const newDiaryList = data.filter((el) => el.id !== targetId);
-
     setData(newDiaryList);
   };
 
@@ -64,10 +63,11 @@ function App() {
 
   return (
     <div className="App">
+      <Lifecycle />
       <DiaryEditor onCreate={onCreate} />
       <DiaryList diaryList={data} onRemove={onRemove} onEdit={onEdit} />
     </div>
   );
-}
+};
 
 export default App;

@@ -47,6 +47,7 @@ const DiaryEditor = (props) => {
           name="writer"
           value={state.writer}
           onChange={handleChangeState}
+          placeholder="작성자"
         />
       </div>
       {/* 일기 내용 */}
@@ -56,6 +57,7 @@ const DiaryEditor = (props) => {
           name="content"
           value={state.content}
           onChange={handleChangeState}
+          placeholder="일기"
         />
       </div>
       {/* 감정 점수 */}

@@ -8,7 +8,12 @@ const DiaryList = (props) => {
         <h4>{props.diaryList.length}개의 일기가 있습니다</h4>
         <div>
           {props.diaryList.map((el) => (
-            <DiaryItem key={el.id} {...el} onDelete={props.onDelete} />
+            <DiaryItem
+              key={el.id}
+              {...el}
+              onEdit={props.onEdit}
+              onRemove={props.onRemove}
+            />
           ))}
         </div>
       </div>

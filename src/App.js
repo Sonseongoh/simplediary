@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
-
 const App = () => {
   const [data, setData] = useState([]);
 
@@ -30,7 +29,7 @@ const App = () => {
     getData();
   }, []);
 
-  const onCreate = (writer, content, emotion) => {
+  const onCreate = useCallback((writer, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       writer,
@@ -40,24 +39,22 @@ const App = () => {
       id: dataId.current,
     };
     dataId.current += 1;
-    setData([newItem, ...data]);
-  };
+    setData((data) => [newItem, ...data]);
+  }, []);
 
-  const onRemove = (targetId) => {
-    const newDiaryList = data.filter((el) => el.id !== targetId);
-    setData(newDiaryList);
-  };
+  const onRemove = useCallback((targetId) => {
+    setData((data) => data.filter((el) => el.id !== targetId));
+  }, []);
 
-  const onEdit = (targetId, newContent) => {
-    setData(
+  const onEdit = useCallback((targetId, newContent) => {
+    setData((data) =>
       data.map((el) =>
         el.id === targetId ? { ...el, content: newContent } : el
       )
     );
-  };
+  }, []);
 
   const getDiaryAnalysis = useMemo(() => {
-    console.log("일기 분석 시작");
     //감정 점수가 3점 이상인 일기 수
     const goodCount = data.filter((el) => el.emotion >= 3).length;
     //감정 점수가 2점 이하인 일기 수

@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
 const DiaryItem = (props) => {
-  useEffect(() => {
-    console.log(`${props.id}번째 아이템 렌더`);
-  });
+  const { onRemove, onEdit } = useContext(DiaryDispatchContext);
 
   const [isEdit, setIsEdit] = useState(false);
   const toggleIsEdit = () => setIsEdit(!isEdit);
@@ -14,7 +13,7 @@ const DiaryItem = (props) => {
 
   const handleRemove = () => {
     if (window.confirm(`${props.id}번쨰 일기를 정말 삭제하시겠습니까?`)) {
-      props.onRemove(props.id);
+      onRemove(props.id);
     }
   };
 
@@ -31,7 +30,7 @@ const DiaryItem = (props) => {
     }
     //수정 할건지 확인
     if (window.confirm(`${props.id}번 째 일기를 수정하시겠습니까?`)) {
-      props.onEdit(props.id, localContent);
+      onEdit(props.id, localContent);
       //수정 한 후 입력창 닫기
       toggleIsEdit(false);
     }
